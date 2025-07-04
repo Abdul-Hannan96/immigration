@@ -1,0 +1,53 @@
+---
+title: "Immigration Analysis"
+author: "Your Name"
+format: html
+execute: 
+  echo: false
+---
+
+**Statiscal Formula**
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n + \epsilon
+$$
+
+with $\epsilon \sim \mathcal{N}(0, \sigma^2)$
+
+```{r}
+#| message: false
+library(tidyverse)
+library(primer.data)
+library(tidymodels)
+library(broom)
+library(easystats)
+```
+
+
+
+**Estimated Model Without Error Term**
+$$\widehat{\text{att\_end}} = 8.45 + 1.55 \cdot \text{treatment}_{\text{Treated}}$$
+
+
+
+# Summary:
+Attitudes toward immigration are an increasingly important part of US congressional elections. Using data from a 2012 experiment among Boston commuters, we seek to explore the causal effect of exposure to Spanish speakers on attitudes toward immigration among registered voters in Georgia today. However, the model’s conclusions may be limited due to changes in public opinion since 2012, which could affect the stability of relationships found in the original data.We model voter attitudes, measured on a continuous scale, as a linear function of whether a person was exposed to Spanish speakers during the experiment.
+
+
+```{r}
+#| cache: true
+fit_att <- linear_reg(engine = "lm") |> 
+  fit(att_end ~ treatment, data = trains)
+
+```
+
+```{r}
+library(knitr)
+
+tidy(fit_att, conf.int = TRUE) |>
+  select(term, estimate, conf.low, conf.high) |>
+  kable(
+    caption = "Estimates and 95% Confidence Intervals for Parameters\nSource: Enos (2014)"
+  )
+
+```
+
