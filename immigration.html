@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Your Name">
+<meta name="author" content="Abdul Hannan">
 
 <title>Immigration Analysis</title>
 <style>
@@ -86,7 +86,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Your Name </p>
+             <p>Abdul Hannan </p>
           </div>
   </div>
     
@@ -99,18 +99,36 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Statiscal Formula</strong> <span class="math display">\[
+<section id="immigration-attitudes-statistical-modeling-report" class="level1">
+<h1>📊 Immigration Attitudes: Statistical Modeling Report</h1>
+<hr>
+<section id="statistical-model-structure" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-model-structure">📐 Statistical Model Structure</h2>
+<p><strong>General Linear Regression Formula:</strong></p>
+<p><span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n + \epsilon
 \]</span></p>
 <p>with <span class="math inline">\(\epsilon \sim \mathcal{N}(0, \sigma^2)\)</span></p>
-<p><strong>Estimated Model Without Error Term</strong> <span class="math display">\[\widehat{\text{att\_end}} = 8.45 + 1.55 \cdot \text{treatment}_{\text{Treated}}\]</span></p>
-<section id="summary" class="level1">
-<h1>Summary:</h1>
-<p>Attitudes toward immigration are an increasingly important part of US congressional elections. Using data from a 2012 experiment among Boston commuters, we seek to explore the causal effect of exposure to Spanish speakers on attitudes toward immigration among registered voters in Georgia today. However, the model’s conclusions may be limited due to changes in public opinion since 2012, which could affect the stability of relationships found in the original data.We model voter attitudes, measured on a continuous scale, as a linear function of whether a person was exposed to Spanish speakers during the experiment.</p>
+<p>📊 Estimated Model (No Error Term) Fitted Model for Predicted Immigration Attitude</p>
+<p>We estimate the outcome — attitudes toward immigration — using a linear model based on whether an individual was exposed to Spanish speakers.</p>
+<p>The mathematical representation of the fitted model (without the error term) is:</p>
+<p><span class="math display">\[\widehat{\text{att\_end}} = 8.45 + 1.55 \cdot \text{treatment}_{\text{Treated}}\]</span></p>
+<p>This equation means:</p>
+<ul>
+<li><p>Individuals not exposed (Control group) have an average score of 8.45.</p></li>
+<li><p>Those in the Treated group score 1.55 points higher on average.</p></li>
+<li><p>This supports the idea that exposure may increase conservative attitudes about immigration.</p></li>
+</ul>
+<p>​</p>
+<p>📝 Project Summary Attitudes toward immigration are an increasingly important part of US congressional elections. Using data from a 2012 experiment among Boston commuters, we explore the causal effect of exposure to Spanish speakers on attitudes toward immigration among registered voters in Georgia today.</p>
+<p><br> However, the model’s conclusions may be limited due to changes in public opinion since 2012, which could affect the stability of relationships found in the original data. We model voter attitudes, measured on a continuous scale, as a linear function of whether a person was exposed to Spanish speakers during the experiment.</p>
+<p><br> We estimate that exposure increases immigration attitude scores by about 1.55 points, with a 95% confidence interval from 0.51 to 2.58.</p>
+<p><br> Our model assumes the relationship between treatment and attitude hasn’t changed since 2012 — which may not be true today. Also, unmeasured confounders or sample bias could affect the accuracy. A more cautious estimate might lower the effect size to 1.0, with a wider interval like 0.2 to 2.3.</p>
+<p><br></p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Estimates and 95% Confidence Intervals for Parameters Source: Enos (2014)</caption>
+<caption>Estimates and 95% Confidence Intervals for Parameters — Source: Enos (2014)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">term</th>
@@ -136,6 +154,23 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n + \epsilon
 </table>
 </div>
 </div>
+<p><br></p>
+<p>📉 Visualizing the Treatment Effect</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="immigration_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>✅ Final Notes</p>
+<p>– Confidence intervals help us assess uncertainty.</p>
+<p>– Assumptions like stability, validity, and representativeness should be revisited when generalizing.</p>
+<p>– Even a small visual and formatting improvement helps better communicate your findings.</p>
+</section>
 </section>
 
 </main>

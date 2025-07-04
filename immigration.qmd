@@ -1,17 +1,46 @@
 ---
 title: "Immigration Analysis"
-author: "Your Name"
+author: "Abdul Hannan"
 format: html
-execute: 
+execute:
   echo: false
 ---
 
-**Statiscal Formula**
+# 📊 Immigration Attitudes: Statistical Modeling Report
+
+---
+
+## 📐 Statistical Model Structure
+
+**General Linear Regression Formula:**
+
 $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n + \epsilon
 $$
 
 with $\epsilon \sim \mathcal{N}(0, \sigma^2)$
+
+📊 Estimated Model (No Error Term)
+Fitted Model for Predicted Immigration Attitude
+
+We estimate the outcome — attitudes toward immigration — using a linear model based on whether an individual was exposed to Spanish speakers.
+
+The mathematical representation of the fitted model (without the error term) is:
+
+  
+$$\widehat{\text{att\_end}} = 8.45 + 1.55 \cdot \text{treatment}_{\text{Treated}}$$
+
+
+
+This equation means:
+
+- Individuals not exposed (Control group) have an average score of 8.45.
+
+- Those in the Treated group score 1.55 points higher on average.
+
+- This supports the idea that exposure may increase conservative attitudes about immigration.
+
+
 
 ```{r}
 #| message: false
@@ -20,34 +49,82 @@ library(primer.data)
 library(tidymodels)
 library(broom)
 library(easystats)
+library(marginaleffects)
+library(knitr)
 ```
 
+​
+ 
+📝 Project Summary
+Attitudes toward immigration are an increasingly important part of US congressional elections.
+Using data from a 2012 experiment among Boston commuters, we explore the causal effect of exposure to Spanish speakers on attitudes toward immigration among registered voters in Georgia today.
 
+<br>
+However, the model’s conclusions may be limited due to changes in public opinion since 2012, which could affect the stability of relationships found in the original data.
+We model voter attitudes, measured on a continuous scale, as a linear function of whether a person was exposed to Spanish speakers during the experiment.
 
-**Estimated Model Without Error Term**
-$$\widehat{\text{att\_end}} = 8.45 + 1.55 \cdot \text{treatment}_{\text{Treated}}$$
+<br>
+We estimate that exposure increases immigration attitude scores by about 1.55 points, with a 95% confidence interval from 0.51 to 2.58.
 
-
-
-# Summary:
-Attitudes toward immigration are an increasingly important part of US congressional elections. Using data from a 2012 experiment among Boston commuters, we seek to explore the causal effect of exposure to Spanish speakers on attitudes toward immigration among registered voters in Georgia today. However, the model’s conclusions may be limited due to changes in public opinion since 2012, which could affect the stability of relationships found in the original data.We model voter attitudes, measured on a continuous scale, as a linear function of whether a person was exposed to Spanish speakers during the experiment.
+<br>
+Our model assumes the relationship between treatment and attitude hasn’t changed since 2012 — which may not be true today.
+Also, unmeasured confounders or sample bias could affect the accuracy. A more cautious estimate might lower the effect size to 1.0, with a wider interval like 0.2 to 2.3.
 
 
 ```{r}
 #| cache: true
 fit_att <- linear_reg(engine = "lm") |> 
   fit(att_end ~ treatment, data = trains)
-
 ```
 
-```{r}
-library(knitr)
+<br>
 
+```{r}
+#| cache: true
 tidy(fit_att, conf.int = TRUE) |>
   select(term, estimate, conf.low, conf.high) |>
   kable(
-    caption = "Estimates and 95% Confidence Intervals for Parameters\nSource: Enos (2014)"
+    caption = "Estimates and 95% Confidence Intervals for Parameters — Source: Enos (2014)"
+  )
+```
+
+<br>
+
+📉 Visualizing the Treatment Effect
+```{r}
+#| cache: true
+avg_comparisons(fit_att) |>
+  ggplot(aes(x = 1, y = estimate)) +
+  geom_pointrange(aes(ymin = conf.low, ymax = conf.high),
+                  size = 1.2,
+                  linewidth = 1.5,
+                  color = "#2E86AB") +
+  scale_y_continuous(breaks = seq(0, 3, 0.5), limits = c(0, 3)) +
+  labs(
+    title = "Causal Effect on Attitudes Toward Immigration",
+    subtitle = "Hearing Spanish-speakers makes people more conservative about immigration",
+    caption = "Source: Enos (2012)",
+    y = "Effect on 3 to 15 Scale",
+    x = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 12, margin = margin(b = 10)),
+    plot.caption = element_text(size = 10, margin = margin(t = 10))
   )
 
 ```
+
+<br>
+
+✅ Final Notes
+
+-- Confidence intervals help us assess uncertainty.
+
+-- Assumptions like stability, validity, and representativeness should be revisited when generalizing.
+
+-- Even a small visual and formatting improvement helps better communicate your findings.
 
